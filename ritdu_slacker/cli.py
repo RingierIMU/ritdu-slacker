@@ -3,7 +3,8 @@ import os
 import json
 from .api import SlackClient
 import logging
-_tool_name = "ritdu-slacker"
+
+_tool_name = "ritdu-slacker" # Try fetch this from pip __main__ instead of repeating.
 logger = logging.getLogger()
 logger.setLevel(logging.ERROR)
 logging.basicConfig(
@@ -11,6 +12,7 @@ logging.basicConfig(
     + _tool_name
     + " [%(levelname)s] %(funcName)s %(lineno)d: %(message)s"
 )
+
 class SlackMessageCLI():
     def __init__(self):
         self.sender = SlackClient()

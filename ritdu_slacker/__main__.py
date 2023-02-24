@@ -3,7 +3,7 @@ from .cli import SlackMessageCLI
 from .version import __version__
 from signal import signal, SIGINT
 from sys import exit
-import click, logging
+import click,logging
 
 _tool_name = "ritdu-slacker"
 logger = logging.getLogger()
