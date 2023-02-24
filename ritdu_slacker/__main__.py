@@ -1,4 +1,5 @@
-from .commands.commands import message, file
+from .slacker import SlackClient #Even though we don't use it here directly, it makes it available to other code
+from .cli import SlackMessageCLI
 from .version import __version__
 from signal import signal, SIGINT
 from sys import exit
@@ -24,19 +25,9 @@ def sigint_handler(signal_received, frame):
     logger.warning("SIGINT or CTRL-C detected. Exiting gracefully")
     exit(0)
 
-
-@click.group(help="CLI tool send/update slack messages and send files")
-@click.help_option("--help", "-h")
-@click.version_option(
-    prog_name=_tool_name, version=version(), message="%(prog)s, version %(version)s"
-)
 def main():
-    pass
-
-
-main.add_command(message)
-main.add_command(file)
-
+    cli = SlackMessageCLI()
+    cli.main()
 
 if __name__ == "__main__":
     signal(SIGINT, sigint_handler)
