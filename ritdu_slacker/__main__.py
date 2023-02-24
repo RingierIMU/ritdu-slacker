@@ -1,4 +1,4 @@
-from .slacker import SlackClient #Even though we don't use it here directly, it makes it available to other code
+from .api import SlackClient #Even though we don't use it here directly, it makes it available to other code
 from .cli import SlackMessageCLI
 from .version import __version__
 from signal import signal, SIGINT

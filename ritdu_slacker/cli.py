@@ -1,7 +1,7 @@
 import click
 import os
 import json
-from .slacker import SlackClient
+from .api import SlackClient
 import logging
 _tool_name = "ritdu-slacker"
 logger = logging.getLogger()
