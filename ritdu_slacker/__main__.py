@@ -1,10 +1,7 @@
-from .api import (
-    SlackClient,
-)  # Even though we don't use it here directly, it makes it available to other code
 from .cli import SlackMessageCLI
 from signal import signal, SIGINT
 from sys import exit
-import click, logging
+import logging
 
 _tool_name = "ritdu-slacker"
 logger = logging.getLogger()

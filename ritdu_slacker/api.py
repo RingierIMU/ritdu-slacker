@@ -1,7 +1,4 @@
-import base64
-import click
-import logging, json
-import requests
+import json
 from signal import signal, SIGINT
 from requests import Session
 from requests.adapters import HTTPAdapter
