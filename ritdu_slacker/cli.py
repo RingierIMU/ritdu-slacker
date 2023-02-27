@@ -2,6 +2,7 @@ import click
 import os
 import json
 from .api import SlackClient
+from .version import __version__
 import logging
 
 _tool_name = "ritdu-slacker"  # Try fetch this from pip __main__ instead of repeating.
@@ -18,8 +19,15 @@ class SlackMessageCLI:
     def __init__(self):
         self.sender = SlackClient()
 
+    def version():
+        """Return the version of this cli tool"""
+        return __version__
+
     @click.group(help="CLI tool send/update slack messages and send files")
     @click.help_option("--help", "-h")
+    @click.version_option(
+        prog_name=_tool_name, version=version(), message="%(prog)s, version %(version)s"
+    )
     def main():
         pass
 

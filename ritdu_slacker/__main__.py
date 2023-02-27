@@ -2,7 +2,6 @@ from .api import (
     SlackClient,
 )  # Even though we don't use it here directly, it makes it available to other code
 from .cli import SlackMessageCLI
-from .version import __version__
 from signal import signal, SIGINT
 from sys import exit
 import click, logging
@@ -15,11 +14,6 @@ logging.basicConfig(
     + _tool_name
     + " [%(levelname)s] %(funcName)s %(lineno)d: %(message)s"
 )
-
-
-def version():
-    """Return the version of this cli tool"""
-    return __version__
 
 
 def sigint_handler(signal_received, frame):
