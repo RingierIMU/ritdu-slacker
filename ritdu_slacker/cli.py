@@ -163,20 +163,19 @@ class SlackMessageCLI:
 
         file_basename = os.path.basename(file)
         sender = get_client()
-        with open(file, "rb") as open_file:
-            result = sender.post_file(
-                text=f"{text}" if text else f"File: {file_basename}",
-                thread_uuid=thread_uuid if thread_uuid else "",
-                message_uuid=message_uuid if message_uuid else "",
-                message_or_thread_uuid=(
-                    message_or_thread_uuid if message_or_thread_uuid else ""
-                ),
-                workspace=workspace,
-                channel=channel,
-                command=command,
-                file_bytes=open_file,
-                thread_broadcast=thread_broadcast,
-            )
+        result = sender.post_file(
+            file_path=file,
+            text=f"{text}" if text else f"File: {file_basename}",
+            thread_uuid=thread_uuid if thread_uuid else "",
+            message_uuid=message_uuid if message_uuid else "",
+            message_or_thread_uuid=(
+                message_or_thread_uuid if message_or_thread_uuid else ""
+            ),
+            workspace=workspace,
+            channel=channel,
+            command=command,
+            thread_broadcast=thread_broadcast,
+        )
         print(json.dumps(result))
 
     main.add_command(file)

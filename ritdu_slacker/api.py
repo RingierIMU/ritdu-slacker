@@ -1,3 +1,4 @@
+import json
 from requests import Session
 from requests.adapters import HTTPAdapter
 from urllib3.util import Retry
@@ -32,6 +33,7 @@ class SlackClient:
         thread_broadcast=False,
     ):
         url = "https://slacker.cube-services.net/api/message-template"
+        headers = {"Content-Type": "application/json"}
         fallback = text
         # fallback_message cannot be a dict, set to blank str if we detect SlackJson
         if command == "SlackJson":
@@ -48,12 +50,14 @@ class SlackClient:
             "message": text,
             "fallback_message": fallback,
         }
-        response = self.session.post(url=url, json=data, timeout=(10, 10)).json()
+        response = self.session.post(
+            url=url, headers=headers, json=data, timeout=(10, 10)
+        ).json()
         return response
 
     def post_file(
         self,
-        file_bytes,
+        file_path,
         text,
         workspace,
         channel,
@@ -64,19 +68,31 @@ class SlackClient:
         thread_broadcast=False,
     ):
         url = "https://slacker.cube-services.net/api/message-template"
-        files = {"file": file_bytes}
-        data = {
-            "command": command,
-            "workspace": workspace,
-            "channel": channel,
-            "message_uuid": message_uuid,
-            "thread_uuid": thread_uuid,
-            "message_or_thread_uuid": message_or_thread_uuid,
-            "thread_broadcast": thread_broadcast,
-            "message": text,
-            "fallback_message": text,
-        }
-        response = self.session.post(
-            url=url, files=files, json=data, timeout=(10, 10)
-        ).json()
+        headers = {"Accept": "application/json"}
+
+        # Read the file in binary mode
+        with open(file_path, 'rb') as file:
+            files = {"file": ("filename", file, "application/octet-stream")}
+            data = {
+                "command": command,
+                "workspace": workspace,
+                "channel": channel,
+                "message_uuid": message_uuid,
+                "thread_uuid": thread_uuid,
+                "message_or_thread_uuid": message_or_thread_uuid,
+                "thread_broadcast": thread_broadcast,
+                "message": text,
+                "fallback_message": text,
+            }
+
+            # Create a payload with the JSON stringified
+            payload = {"json": (None, json.dumps(data), "application/json")}
+
+            response = self.session.post(
+                url=url,
+                headers=headers,
+                files={**files, **payload},
+                timeout=(10, 10),
+            ).json()
+
         return response
