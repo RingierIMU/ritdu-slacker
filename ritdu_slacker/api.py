@@ -71,7 +71,7 @@ class SlackClient:
         headers = {"Accept": "application/json"}
 
         # Read the file in binary mode
-        with open(file_path, 'rb') as file:
+        with open(file_path, "rb") as file:
             files = {"file": ("filename", file, "application/octet-stream")}
             data = {
                 "command": command,
