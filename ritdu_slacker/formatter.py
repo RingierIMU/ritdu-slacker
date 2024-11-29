@@ -8,6 +8,7 @@ class MessageFormatter:
                 "INFO": ":information_source:",
                 "ERROR": ":exclamation:",
                 "WARNING": ":warning:",
+                "ALERT": ":slacker_deploy_failed:",
                 "UNKNOWN": ":question:",
             }
         self.emoji_map = emoji_map
